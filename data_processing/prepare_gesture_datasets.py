@@ -175,11 +175,12 @@ if __name__ == "__main__":
     data_root = '../data/GENEA/source'
     bvhpath = os.path.join(data_root, 'bvh')
     audiopath = os.path.join(data_root, 'audio')
+    scriptpath = os.path.join(data_root, "script")
     held_out = ['Recording_008']
     processed_dir = '../data/GENEA/processed'    
     
     files = []
-    
+
     # r=root, d=directories, f = files
     for r, d, f in os.walk(bvhpath):
         for file in sorted(f):
@@ -213,7 +214,7 @@ if __name__ == "__main__":
     if not os.path.exists(speech_path):
         print('Processing speech features...')
         os.makedirs(speech_path)
-        extract_melspec(audiopath, files, speech_path, fps)
+        extract_melspec(audiopath, files, speech_path, fps, files)
     else:
         print('Found speech features. skipping processing...')
     
