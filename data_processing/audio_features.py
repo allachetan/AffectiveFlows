@@ -75,7 +75,6 @@ def extract_melspec(audio_dir, files, destpath, fps, sentence_path):
             melspec_feat = np.append(melspec_feat, features, axis = 1)
 
         np.save(outfile,np.transpose(melspec_feat))
-        return melspec_feat
 
 def get_dfd(mfcc_features):
     mfcc_features_1d = mfcc_features[2:] - mfcc_features[1:-1]
@@ -108,7 +107,6 @@ def extract_mfcc(audio_dir, files, destpath, sentence_path):
             start = end
 
         np.save(outfile, np.transpose(mfcc_features))
-        return mfcc_features
 
 if __name__ == "__main__":
     audio_dir = "../data"
