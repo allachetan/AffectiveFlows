@@ -108,15 +108,6 @@ def extract_mfcc(audio_dir, files, destpath, sentence_path):
 
         np.save(outfile, np.transpose(mfcc_features))
 
-if __name__ == "__main__":
-    audio_dir = "../data"
-    files = ["TestSeq001-2"]
-    destpath = "../data"
-    fps = 20
-
-    extract_mfcc(audio_dir, files, destpath, ["../data/TestSeq002"])
-
-    extract_melspec(audio_dir, files, destpath, fps, ["../data/TestSeq002"])
 
 
 
