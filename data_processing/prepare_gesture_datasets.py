@@ -176,7 +176,7 @@ if __name__ == "__main__":
     bvhpath = os.path.join(data_root, 'bvh')
     audiopath = os.path.join(data_root, 'audio')
     scriptpath = os.path.join(data_root, "script")
-    held_out = ['Recording_008']
+    held_out = ['8']
     processed_dir = '../data/GENEA/processed'    
     
     files = []
