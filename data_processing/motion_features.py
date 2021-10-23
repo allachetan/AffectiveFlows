@@ -43,27 +43,15 @@ def extract_joint_angles(bvh_dir, files, destpath, fps, fullbody=False):
         print(ff)
         data_all.append(p.parse(ff))
 
-    if fullbody:
-        data_pipe = Pipeline([
-            ('dwnsampl', DownSampler(tgt_fps=fps, keep_all=False)),
-            ('mir', Mirror(axis='X', append=True)),
-            ('jtsel', JointSelector(['Spine','Spine1','Neck','Head','RightShoulder', 'RightArm', 'RightForeArm', 'RightHand', 'LeftShoulder', 'LeftArm', 'LeftForeArm', 'LeftHand', 'RightUpLeg', 'RightLeg', 'RightFoot', 'RightToeBase', 'LeftUpLeg', 'LeftLeg', 'LeftFoot', 'LeftToeBase'], include_root=True)),
-            ('root', RootTransformer('pos_rot_deltas', position_smoothing=5, rotation_smoothing=10)),
-            ('exp', MocapParameterizer('expmap')), 
-            ('cnst', ConstantsRemover()),
-            ('npf', Numpyfier())
-        ])
-    else:
-        data_pipe = Pipeline([
-           ('dwnsampl', DownSampler(tgt_fps=fps,  keep_all=False)),
-           ('root', RootTransformer('hip_centric')),
-           ('mir', Mirror(axis='X', append=True)),
-           ('jtsel', JointSelector(['Spine','Spine1','Spine2','Spine3','Neck','Neck1','Head','RightShoulder', 'RightArm', 'RightForeArm', 'RightHand', 'LeftShoulder', 'LeftArm', 'LeftForeArm', 'LeftHand'], include_root=True)),
-           ('exp', MocapParameterizer('expmap')), 
-           ('cnst', ConstantsRemover()),
-           ('np', Numpyfier())
-        ])
-
+    data_pipe = Pipeline([
+        ('dwnsampl', DownSampler(tgt_fps=fps, keep_all=False)),
+        ('mir', Mirror(axis='X', append=True)),
+        ('jtsel', JointSelector(['body_world', 'b_root', 'b_spine0', 'b_spine1', 'b_spine2', 'b_spine3', 'b_neck0', 'b_head', 'b_head_null', 'b_r_shoulder', 'p_r_scap', 'b_r_arm', 'b_r_arm_twist', 'b_r_forearm', 'b_r_wrist_twist', 'b_r_wrist', 'b_r_index1', 'b_r_index2', 'b_r_index3', 'b_r_ring1', 'b_r_ring2', 'b_r_ring3', 'b_r_middle1', 'b_r_middle2', 'b_r_middle3', 'b_r_pinky1', 'b_r_pinky2', 'b_r_pinky3', 'b_r_thumb0', 'b_r_thumb1', 'b_r_thumb2', 'b_r_thumb3', 'b_l_shoulder', 'p_l_delt', 'p_l_scap', 'b_l_arm', 'b_l_arm_twist', 'b_l_forearm', 'b_l_wrist_twist', 'b_l_wrist', 'b_l_thumb0', 'b_l_thumb1', 'b_l_thumb2', 'b_l_thumb3', 'b_l_index1', 'b_l_index2', 'b_l_index3', 'b_l_middle1', 'b_l_middle2', 'b_l_middle3', 'b_l_ring1', 'b_l_ring2', 'b_l_ring3', 'b_l_pinky1', 'b_l_pinky2', 'b_l_pinky3', 'p_navel', 'b_r_upleg', 'b_r_leg', 'b_r_foot_twist', 'b_r_foot', 'b_l_upleg', 'b_l_leg', 'b_l_foot_twist', 'b_l_foot',], include_root=True)),
+        ('root', RootTransformer('pos_rot_deltas', position_smoothing=5, rotation_smoothing=10)),
+        ('exp', MocapParameterizer('expmap')), 
+        ('cnst', ConstantsRemover()),
+        ('npf', Numpyfier())
+    ])
 
     print("Processing...")
     out_data = data_pipe.fit_transform(data_all)
