@@ -1,7 +1,7 @@
 {
   "Dir": {
-    "data_root": "data/trinity/processed",
-    "log_root": "results/trinity"
+    "data_root": "data/GENEA/processed",
+    "log_root": "results/GENEA"
   },
   "Glow": {
     "hidden_channels": 800,
@@ -40,9 +40,9 @@
   },
   "Device": {
     "glow": [
-      "cuda:4"
+      "cuda:0"
     ],
-    "data": "cuda:4"
+    "data": "cuda:0"
   },
   "Train": {
     "batch_size": 60,
